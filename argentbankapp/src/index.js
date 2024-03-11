@@ -1,23 +1,24 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import './assets/css/main.css'
+import Home from './pages/homepage'
+import { Route, BrowserRouter, Routes } from 'react-router-dom'
+import ErrorPage from './pages/errorPage'
+import SignInPage from './pages/signin'
+import UserPage from './pages/user'
 
-const container = document.getElementById('root');
-const root = createRoot(container);
+const container = document.getElementById('root')
+const root = createRoot(container)
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    <React.StrictMode>
+        <BrowserRouter>
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/signin" element={<SignInPage />} />
+                <Route path="/user" element={<UserPage />} />
+                <Route path="*" element={<ErrorPage />} />
+            </Routes>
+        </BrowserRouter>
+    </React.StrictMode>
+)
