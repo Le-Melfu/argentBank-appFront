@@ -1,39 +1,53 @@
-import { redirect } from 'react-router-dom'
+import {} from 'react-router-dom'
 import Input, { Input_Type } from '../molecules/input'
 import { useState } from 'react'
 
 const SignInForm = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    })
-    const handleInputChange = (event) => {
-        const { email, value } = event.target
-        setFormData({ ...formData, [email]: value })
+    const [userEmail, setUserEmail] = useState()
+    const [userPassword, setUserPassword] = useState()
+
+    const handleInputChange = (e) => {
+        switch (e.name) {
+            case 'email':
+                setUserEmail(e.value)
+                break
+            case 'password':
+                setUserPassword(e.value)
+                break
+            default:
+                setUserEmail('')
+                setUserPassword('')
+        }
     }
+
+    const onSuccess = (message) => {
+        alert(message)
+        window.location.replace('./user')
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const userAccount = {
-            email: formData.email,
-            password: formData.password,
+            email: userEmail,
+            password: userPassword,
         }
         fetch('http://localhost:3001/api/v1/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: { userAccount },
+            body: JSON.stringify(userAccount),
         })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Erreur lors de la requête')
                 }
-                console.log(response.json())
                 return response.json()
             })
             .then((data) => {
-                const token = data
+                const token = data.body.token
                 localStorage.setItem('accessToken', token)
+                onSuccess(data.message)
             })
             .catch((error) => {
                 console.error('Erreur lors de la requête:', error)
@@ -49,7 +63,6 @@ const SignInForm = () => {
                     label="Email"
                     type={Input_Type.INPUT_EMAIL}
                     styleclass="input-wrapper"
-                    value={formData.email}
                     onChange={handleInputChange}
                 />
                 <Input
@@ -57,7 +70,6 @@ const SignInForm = () => {
                     label="Password"
                     type={Input_Type.INPUT_PASSWORD}
                     styleclass="input-wrapper"
-                    value={formData.password}
                     onChange={handleInputChange}
                 />
                 <Input
@@ -65,13 +77,7 @@ const SignInForm = () => {
                     label="Remember me"
                     type={Input_Type.INPUT_CHECKBOX}
                     styleclass="input-remember"
-                    value={formData.rememberMe}
-                    onChange={handleInputChange}
                 />
-                {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                {/* <a href="./user" class="sign-in-button">
-                    Sign In
-                </a> */}
                 <button type="submit" className="sign-in-button">
                     Sign In
                 </button>

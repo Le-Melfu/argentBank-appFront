@@ -1,6 +1,5 @@
 import Footer from '../components/organisms/footer'
 import NavBar from '../components/organisms/navbar'
-import { redirect } from 'react-router-dom'
 
 const UserPage = () => {
     return (
