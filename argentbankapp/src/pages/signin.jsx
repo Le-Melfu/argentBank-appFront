@@ -6,7 +6,9 @@ import SignInForm from '../components/organisms/signInForm'
 const SignInPage = () => {
     return (
         <div className="main-container">
-            <NavBar />
+            <header>
+                <NavBar />
+            </header>
             <main className="main bg-dark">
                 <SignInForm />
             </main>

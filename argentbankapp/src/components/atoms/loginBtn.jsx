@@ -3,6 +3,7 @@ const LogInBtn = () => {
     const logOut = () => {
         localStorage.removeItem('accessToken')
     }
+
     if (!token) {
         return (
             <div>
@@ -16,8 +17,7 @@ const LogInBtn = () => {
         return (
             <div>
                 <a className="main-nav-item" href="/" onClick={logOut}>
-                    <i className="fa fa-user-circle"></i>
-                    Log out
+                    <i class="fa-solid fa-power-off"></i>
                 </a>
             </div>
         )
