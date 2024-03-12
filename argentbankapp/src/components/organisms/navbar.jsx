@@ -1,13 +1,23 @@
-import LogInBtn from '../atoms/loginBtn'
+import UserBtn from '../atoms/userBtn'
 import Logo from '../atoms/logo'
 
 const NavBar = () => {
-    return (
-        <nav className="main-nav">
-            <Logo />
-            <LogInBtn />
-        </nav>
-    )
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+        return (
+            <nav className="main-nav">
+                <Logo />
+                <UserBtn />
+            </nav>
+        )
+    } else {
+        return (
+            <nav className="main-nav">
+                <Logo />
+                <UserBtn />
+            </nav>
+        )
+    }
 }
 
 export default NavBar

@@ -1,4 +1,4 @@
-const LogInBtn = () => {
+const UserBtn = () => {
     const token = localStorage.getItem('accessToken')
     const logOut = () => {
         localStorage.removeItem('accessToken')
@@ -17,10 +17,12 @@ const LogInBtn = () => {
         return (
             <div>
                 <a className="main-nav-item" href="/" onClick={logOut}>
-                    <i class="fa-solid fa-power-off"></i>
+                    <i className="fa fa-user-circle"></i>
+                    {/* placeholder */}
+                    Tony Jarvis
                 </a>
             </div>
         )
     }
 }
-export default LogInBtn
+export default UserBtn

@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/organisms/navbar'
 import Hero from '../components/molecules/hero'
-import FeaturesSection from '../components/organisms/features'
+import FeaturesSection from '../components/organisms/featuresSection'
 import Footer from '../components/organisms/footer'
 
 const Home = () => {
