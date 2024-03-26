@@ -7,7 +7,7 @@ const UserPage = () => {
     const token = localStorage.getItem('accessToken')
 
     if (!token) {
-        window.location.replace('./signin')
+        window.location.replace('./login')
     } else {
         return (
             <div className="main-container">

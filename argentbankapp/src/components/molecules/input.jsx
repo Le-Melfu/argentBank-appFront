@@ -14,8 +14,8 @@ const Input = ({
     placeholder,
     onChange,
 }) => {
-    const handleChange = (event) => {
-        onChange(event.target)
+    const handleChange = (e) => {
+        onChange(e)
     }
     let component
     switch (type) {
@@ -48,7 +48,14 @@ const Input = ({
             )
             break
         case Input_Type.INPUT_CHECKBOX:
-            component = <input type="checkbox" name={name} id={name} />
+            component = (
+                <input
+                    type="checkbox"
+                    name={name}
+                    id={name}
+                    onChange={handleChange}
+                />
+            )
             break
         default:
             component = (

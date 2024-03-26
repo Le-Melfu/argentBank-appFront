@@ -1,58 +1,38 @@
-import {} from 'react-router-dom'
 import Input, { Input_Type } from '../molecules/input'
 import { useState } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import {
+    onSubmit,
+    onToggle,
+} from '../../store/Reducers/userReducer/userActions'
+import { useNavigate } from 'react-router-dom'
+import { rememberMeSelector } from '../../store/Reducers/userReducer/userSelectors'
 
-const SignInForm = () => {
-    const [userEmail, setUserEmail] = useState()
-    const [userPassword, setUserPassword] = useState()
+const SignInForm = (remember, onToggle) => {
+    const [userAccount, setUserAccount] = useState({
+        email: '',
+        password: '',
+    })
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleCheckbox = (e) => {
+        dispatch()
+    }
 
     const handleInputChange = (e) => {
-        switch (e.name) {
-            case 'email':
-                setUserEmail(e.value)
-                break
-            case 'password':
-                setUserPassword(e.value)
-                break
-            default:
-                setUserEmail('')
-                setUserPassword('')
-        }
+        const { name, value } = e.target
+        setUserAccount((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }))
     }
 
-    const onSuccess = (message) => {
-        alert(message)
-        window.location.replace('./user')
-    }
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        const userAccount = {
-            email: userEmail,
-            password: userPassword,
-        }
-        fetch('http://localhost:3001/api/v1/user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userAccount),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Erreur lors de la requête')
-                }
-                return response.json()
-            })
-            .then((data) => {
-                const token = data.body.token
-                localStorage.setItem('accessToken', token)
-                onSuccess(data.message)
-            })
-            .catch((error) => {
-                console.error('Erreur lors de la requête:', error)
-            })
+        dispatch(onSubmit(userAccount, navigate))
     }
+
     return (
         <section className="sign-in-content">
             <i className="fa fa-user-circle sign-in-icon"></i>
@@ -77,6 +57,8 @@ const SignInForm = () => {
                     label="Remember me"
                     type={Input_Type.INPUT_CHECKBOX}
                     styleclass="input-remember"
+                    checked={remember}
+                    onChange={handleCheckbox}
                 />
                 <button type="submit" className="sign-in-button">
                     Sign In
@@ -85,5 +67,14 @@ const SignInForm = () => {
         </section>
     )
 }
+
+export const signInFormStore = connect(
+    (state) => ({
+        remember: rememberMeSelector(state),
+    }),
+    (dispatch) => ({
+        onToggle: onToggle(),
+    })
+)(SignInForm)
 
 export default SignInForm
