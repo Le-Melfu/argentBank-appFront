@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export const Input_Type = {
     INPUT_TEXT: 1,
     TEXTAREA: 2,
@@ -13,9 +15,15 @@ const Input = ({
     styleclass,
     placeholder,
     onChange,
+    checked,
 }) => {
     const handleChange = (e) => {
         onChange(e)
+    }
+    const [isChecked, setIsChecked] = useState(false)
+    const handleCheckboxChange = (e) => {
+        setIsChecked(e.target.checked)
+        onChange(isChecked)
     }
     let component
     switch (type) {
@@ -53,7 +61,8 @@ const Input = ({
                     type="checkbox"
                     name={name}
                     id={name}
-                    onChange={handleChange}
+                    checked={checked}
+                    onChange={handleCheckboxChange}
                 />
             )
             break

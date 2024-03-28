@@ -1,24 +1,21 @@
 import Input, { Input_Type } from '../molecules/input'
 import { useState } from 'react'
-import { connect, useDispatch } from 'react-redux'
-import {
-    onSubmit,
-    onToggle,
-} from '../../store/Reducers/userReducer/userActions'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { rememberMeSelector } from '../../store/Reducers/userReducer/userSelectors'
+import {
+    rememberedSelector,
+    updateRememberMe,
+} from '../../store/Reducers/userReducer/userReducer'
+import { onSubmit } from '../../store/Reducers/userReducer/userActions'
 
-const SignInForm = (remember, onToggle) => {
+const SignInForm = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [userAccount, setUserAccount] = useState({
         email: '',
         password: '',
     })
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
-    const handleCheckbox = (e) => {
-        dispatch()
-    }
+    const rememberStatus = useSelector(rememberedSelector)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -28,9 +25,13 @@ const SignInForm = (remember, onToggle) => {
         }))
     }
 
+    const onToggle = (e) => {
+        dispatch(updateRememberMe(!rememberStatus))
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
-        dispatch(onSubmit(userAccount, navigate))
+        dispatch(onSubmit(userAccount, rememberStatus, navigate))
     }
 
     return (
@@ -57,8 +58,8 @@ const SignInForm = (remember, onToggle) => {
                     label="Remember me"
                     type={Input_Type.INPUT_CHECKBOX}
                     styleclass="input-remember"
-                    checked={remember}
-                    onChange={handleCheckbox}
+                    checked={rememberStatus ? rememberStatus : false}
+                    onChange={onToggle}
                 />
                 <button type="submit" className="sign-in-button">
                     Sign In
@@ -67,14 +68,5 @@ const SignInForm = (remember, onToggle) => {
         </section>
     )
 }
-
-export const signInFormStore = connect(
-    (state) => ({
-        remember: rememberMeSelector(state),
-    }),
-    (dispatch) => ({
-        onToggle: onToggle(),
-    })
-)(SignInForm)
 
 export default SignInForm

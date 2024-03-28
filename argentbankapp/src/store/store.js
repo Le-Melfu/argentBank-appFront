@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './Reducers/userReducer/userReducer'
-import { thunk } from 'redux-thunk'
+import userSlice from './Reducers/userReducer/userReducer'
+import { successfulLoginMideware } from './Reducers/succesLoginMidWare'
 
 const store = configureStore({
     reducer: {
-        user: userReducer,
+        user: userSlice,
     },
-    middleware: [thunk],
-    devTools:
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__(),
+    middleware: (getDefaultMiddleware) => [
+        ...getDefaultMiddleware(),
+        successfulLoginMideware,
+    ],
 })
 
 store.subscribe(() => console.log(store.getState()))

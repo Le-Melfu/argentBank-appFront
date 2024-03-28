@@ -1,37 +1,55 @@
-export const ON_SUBMIT = 'ON_SUBMIT'
-export const ON_LOGOUT = 'ON_LOGOUT'
-export const UPDATE_CHECKBOX = 'UPDATE_CHECKBOX'
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-    userEmail: null,
-    userPassword: null,
-    token: null,
-    loading: false,
-    rememberMe: false,
-}
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: {
+        userProfile: null,
+        token: null,
+        error: false,
+        isAuthenticated: false,
+        remembered: false,
+    },
+    reducers: {
+        userLogInSuccess: (state, action) => {
+            state.token = action.payload
+            state.isAuthenticated = true
+            state.error = false
+        },
+        userLoginFailure: (state) => {
+            state.error = true
+            state.isAuthenticated = false
+        },
+        userLogout: (state) => {
+            state.isAuthenticated = false
+            state.token = null
+        },
+        updateRememberMe: (state, action) => {
+            state.remembered = action.payload
+        },
+        userWasRemembered: (state, action) => {
+            state.remembered = true
+            state.token = action.payload
+            state.isAuthenticated = true
+        },
+        getUserProfile: (state, action) => {
+            state.userProfile = action.payload
+        },
+    },
+})
 
-export function userReducer(state = initialState, action) {
-    switch (action.type) {
-        case UPDATE_CHECKBOX:
-            return { ...state, rememberMe: action.payload }
-        case ON_SUBMIT:
-            return {
-                ...state,
-                userEmail: action.payload.userEmail,
-                userPassword: action.payload.userPassword,
-                token: action.payload.token,
-                loading: false,
-            }
-        case ON_LOGOUT:
-            return {
-                ...state,
-                userEmail: null,
-                userPassword: null,
-                token: null,
-            }
-        default:
-            return state
-    }
-}
+export const userSelector = (state) => state.user.userProfile
+export const authStatusSelector = (state) => state.user.isAuthenticated
+export const errorSelector = (state) => state.user.error
+export const rememberedSelector = (state) => state.user.remembered
+export const tokenSelector = (state) => state.user.token
 
-export default userReducer
+export const {
+    userLogInSuccess,
+    userLoginFailure,
+    userLogout,
+    getUserProfile,
+    updateRememberMe,
+    userWasRemembered,
+} = userSlice.actions
+
+export default userSlice.reducer

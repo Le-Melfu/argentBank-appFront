@@ -1,12 +1,13 @@
+import { useSelector } from 'react-redux'
 import UserHeader from '../components/molecules/userHeader'
 import Account from '../components/organisms/account'
 import Footer from '../components/organisms/footer'
 import NavBar from '../components/organisms/navbar'
+import { authStatusSelector } from '../store/Reducers/userReducer/userReducer'
 
 const UserPage = () => {
-    const token = localStorage.getItem('accessToken')
-
-    if (!token) {
+    const userAuthentified = useSelector(authStatusSelector)
+    if (userAuthentified !== true) {
         window.location.replace('./login')
     } else {
         return (

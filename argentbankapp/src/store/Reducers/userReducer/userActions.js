@@ -1,50 +1,76 @@
-import { useDispatch } from 'react-redux'
-import { ON_SUBMIT, ON_LOGOUT, UPDATE_USER } from './userReducer'
+import {
+    getUserProfile,
+    userLogInSuccess,
+    userLoginFailure,
+    userLogout,
+    userWasRemembered,
+} from './userReducer'
 
-const dispatch = useDispatch
-
-export const onSubmit = (userAccount, navigate) => async (dispatch) => {
-    const onSuccess = (message) => {
-        alert(message)
-        navigate('/user')
+export const onSubmit = (userAccount, remembered, navigate) => {
+    return async (dispatch) => {
+        await fetch('http://localhost:3001/api/v1/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userAccount),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la requête')
+                }
+                return response.json()
+            })
+            .then((data) => {
+                const token = data.body.token
+                if (remembered === true) {
+                    localStorage.setItem('accessToken', token)
+                }
+                navigate('/user')
+                dispatch(userLogInSuccess(token))
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la connexion:', error)
+                dispatch(userLoginFailure())
+            })
     }
-    await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userAccount),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Erreur lors de la requête')
-            }
-            return response.json()
-        })
-        .then((data) => {
-            const token = data.body.token
-            const userCredentials = {
-                userEmail: userAccount.email,
-                userPassword: userAccount.password,
-                token: token,
-            }
-            localStorage.setItem('accessToken', token)
-            onSuccess(data.message)
-            dispatch({ type: ON_SUBMIT, payload: userCredentials })
-        })
-        .catch((error) => {
-            console.error('Erreur lors de la requête:', error)
-        })
 }
 
-export const onLogOutAction = () => {
+export const fetchUserProfile = (token) => {
+    return async (dispatch) => {
+        await fetch('http://localhost:3001/api/v1/user/profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la requête')
+                }
+                return response.json()
+            })
+            .then((data) => {
+                const user = data.body
+                console.log(user)
+                dispatch(getUserProfile(user))
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la connexion:', error)
+            })
+    }
+}
+
+export const onLogOut = (dispatch) => {
     localStorage.removeItem('accessToken')
-    dispatch({ type: ON_LOGOUT })
+    dispatch(userLogout)
 }
 
-export const onToggle = () =>{
-    {
-        type: UPDATE_USER,
-        payload:
+export const checkIfUserMemorized = async (dispatch) => {
+    const token = localStorage.getItem('accessToken')
+    if (token !== null) {
+        dispatch(userWasRemembered(token))
+        await dispatch(fetchUserProfile(token))
     }
 }
