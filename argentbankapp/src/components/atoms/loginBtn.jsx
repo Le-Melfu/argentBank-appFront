@@ -1,9 +1,18 @@
+import { useSelector } from 'react-redux'
+import { userSelector } from '../../store/Reducers/userReducer/userReducer'
+
 const LoginBtn = () => {
+    const userProfile = useSelector(userSelector)
     return (
         <div>
-            <a className="main-nav-item" href="./login">
+            <a
+                className="main-nav-item"
+                href={userProfile ? './profile' : './login'}
+            >
                 <i className="fa fa-user-circle"></i>
-                Sign In
+                {userProfile
+                    ? `${userProfile.firstName} ${userProfile.lastName}`
+                    : 'Sign In'}
             </a>
         </div>
     )

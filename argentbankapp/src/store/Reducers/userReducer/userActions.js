@@ -62,6 +62,8 @@ export const fetchUserProfile = (token) => {
     }
 }
 
+export const fetchNewUserName = (newUsername) => {}
+
 export const onLogOut = (dispatch) => {
     localStorage.removeItem('accessToken')
     dispatch(userLogout)

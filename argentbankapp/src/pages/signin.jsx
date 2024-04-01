@@ -22,7 +22,7 @@ const SignInPage = () => {
             </div>
         )
     } else {
-        navigate('/user')
+        navigate('/profile')
     }
 }
 

@@ -20,8 +20,10 @@ export const userSlice = createSlice({
             state.isAuthenticated = false
         },
         userLogout: (state) => {
+            state.userProfile = null
             state.isAuthenticated = false
             state.token = null
+            state.remembered = false
         },
         updateRememberMe: (state, action) => {
             state.remembered = action.payload
@@ -33,6 +35,9 @@ export const userSlice = createSlice({
         },
         getUserProfile: (state, action) => {
             state.userProfile = action.payload
+        },
+        updateUserProfile: (state, action) => {
+            state.userProfile.userName = action.payload
         },
     },
 })

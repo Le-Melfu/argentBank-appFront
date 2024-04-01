@@ -16,6 +16,8 @@ const Input = ({
     placeholder,
     onChange,
     checked,
+    disabled,
+    value,
 }) => {
     const handleChange = (e) => {
         onChange(e)
@@ -28,7 +30,16 @@ const Input = ({
     let component
     switch (type) {
         case Input_Type.INPUT_TEXT:
-            component = <input type="text" id={name} />
+            component = (
+                <input
+                    type="text"
+                    id={name}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    defaultValue={value}
+                    onChange={handleChange}
+                />
+            )
             break
         case Input_Type.TEXTAREA:
             component = <textarea name={name} id={name} />

@@ -6,8 +6,8 @@ import NavBar from '../components/organisms/navbar'
 import { authStatusSelector } from '../store/Reducers/userReducer/userReducer'
 
 const UserPage = () => {
-    const userAuthentified = useSelector(authStatusSelector)
-    if (userAuthentified !== true) {
+    const isAuthentified = useSelector(authStatusSelector)
+    if (isAuthentified !== true) {
         window.location.replace('./login')
     } else {
         return (

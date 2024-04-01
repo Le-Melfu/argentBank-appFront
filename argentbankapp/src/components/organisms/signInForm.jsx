@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
+    errorSelector,
     rememberedSelector,
     updateRememberMe,
 } from '../../store/Reducers/userReducer/userReducer'
@@ -16,6 +17,7 @@ const SignInForm = () => {
         password: '',
     })
     const rememberStatus = useSelector(rememberedSelector)
+    const fetchError = useSelector(errorSelector)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -64,6 +66,11 @@ const SignInForm = () => {
                 <button type="submit" className="sign-in-button">
                     Sign In
                 </button>
+                <p>
+                    {fetchError
+                        ? 'Votre email ou votre mot de passe est incorrect'
+                        : ''}
+                </p>
             </form>
         </section>
     )
