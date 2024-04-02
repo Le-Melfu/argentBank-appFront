@@ -33,11 +33,8 @@ export const userSlice = createSlice({
             state.token = action.payload
             state.isAuthenticated = true
         },
-        getUserProfile: (state, action) => {
-            state.userProfile = action.payload
-        },
         updateUserProfile: (state, action) => {
-            state.userProfile.userName = action.payload
+            state.userProfile = action.payload
         },
     },
 })
@@ -52,9 +49,9 @@ export const {
     userLogInSuccess,
     userLoginFailure,
     userLogout,
-    getUserProfile,
     updateRememberMe,
     userWasRemembered,
+    updateUserProfile,
 } = userSlice.actions
 
 export default userSlice.reducer

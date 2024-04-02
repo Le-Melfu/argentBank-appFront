@@ -63,7 +63,7 @@ body {
 }
 
 .main-nav-item:hover {
-    text-decoration: underline;
+    color: #008d59;
 }
 
 .main-nav-logo {
@@ -78,18 +78,35 @@ body {
 .navbar {
     display: flex;
     flex-direction: row;
-    width: fit-content;
+    width: 50%;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     gap: 5px;
+    color: #00bc77;
 }
 .nav-btn {
     display: block;
-    align-self: center;
-    justify-self: center;
     margin: 5px;
     width: 25px;
     height: 25px;
+    color: #00bc77;
+}
+.nav-btn-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: normal;
+    height: 25px;
+}
+.nav-btn-user i {
+    margin-right: 5px;
+}
+
+.user-circle {
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
 }
 
 .hero {
@@ -302,6 +319,13 @@ input:disabled {
     justify-content: center;
     align-items: center;
     width: 40%;
+}
+.user-edit-form__btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
 }
 .collapsed {
     display: none;

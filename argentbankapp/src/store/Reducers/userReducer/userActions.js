@@ -1,5 +1,5 @@
 import {
-    getUserProfile,
+    updateUserProfile,
     userLogInSuccess,
     userLoginFailure,
     userLogout,
@@ -53,8 +53,7 @@ export const fetchUserProfile = (token) => {
             })
             .then((data) => {
                 const user = data.body
-                console.log(user)
-                dispatch(getUserProfile(user))
+                dispatch(updateUserProfile(user))
             })
             .catch((error) => {
                 console.error('Erreur lors de la connexion:', error)
@@ -62,7 +61,33 @@ export const fetchUserProfile = (token) => {
     }
 }
 
-export const fetchNewUserName = (newUsername) => {}
+export const fetchNewUserName = (newUsername, token) => {
+    return async (dispatch) => {
+        await fetch('http://localhost:3001/api/v1/user/profile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ userName: newUsername }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la requête')
+                }
+                return response.json()
+            })
+            .then((data) => {
+                dispatch(updateUserProfile(data.body))
+            })
+            .catch((error) => {
+                console.error(
+                    'Erreur lors de la modification du nom utilisateur',
+                    error
+                )
+            })
+    }
+}
 
 export const onLogOut = (dispatch) => {
     localStorage.removeItem('accessToken')
@@ -72,7 +97,7 @@ export const onLogOut = (dispatch) => {
 export const checkIfUserMemorized = async (dispatch) => {
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
-        dispatch(userWasRemembered(token))
+        await dispatch(userWasRemembered(token))
         await dispatch(fetchUserProfile(token))
     }
 }

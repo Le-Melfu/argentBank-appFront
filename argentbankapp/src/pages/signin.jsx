@@ -4,10 +4,9 @@ import Footer from '../components/organisms/footer'
 import SignInForm from '../components/organisms/signInForm'
 import { useSelector } from 'react-redux'
 import { authStatusSelector } from '../store/Reducers/userReducer/userReducer'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 const SignInPage = () => {
-    const navigate = useNavigate()
     const userAuthentified = useSelector(authStatusSelector)
     if (!userAuthentified) {
         return (
@@ -22,7 +21,7 @@ const SignInPage = () => {
             </div>
         )
     } else {
-        navigate('/profile')
+        return <Navigate to={'/profile'} />
     }
 }
 
