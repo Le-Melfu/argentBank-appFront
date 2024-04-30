@@ -13,6 +13,12 @@ body {
     min-height: 100vh;
 }
 
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -78,7 +84,6 @@ body {
 .navbar {
     display: flex;
     flex-direction: row;
-    width: 50%;
     align-items: center;
     justify-content: right;
     gap: 5px;
@@ -110,7 +115,7 @@ body {
 }
 
 .hero {
-    background-image: url('../img/bank-tree.jpeg');
+    background-image: url('../img/bank-tree.webp');
     background-position: 0 -50px;
     background-size: cover;
     background-repeat: no-repeat;

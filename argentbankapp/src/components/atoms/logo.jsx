@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import mainNavLogo from '../../assets/img/argentBankLogo.png'
+import mainNavLogo from '../../assets/img/argentBankLogo.webp'
 
 const Logo = () => {
     return (

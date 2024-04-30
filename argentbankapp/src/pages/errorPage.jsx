@@ -1,12 +1,6 @@
-import Footer from '../components/organisms/footer'
-import NavBar from '../components/organisms/navbar'
-
 const ErrorPage = () => {
     return (
         <div className="main-container">
-            <header>
-                <NavBar />
-            </header>
             <main>
                 <section>
                     <h2>404 Page not Found</h2>
@@ -16,7 +10,6 @@ const ErrorPage = () => {
                     </p>
                 </section>
             </main>
-            <Footer />
         </div>
     )
 }

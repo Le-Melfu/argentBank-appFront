@@ -1,13 +1,17 @@
 import { useSelector } from 'react-redux'
-import { userSelector } from '../../store/Reducers/userReducer/userReducer'
+import {
+    authStatusSelector,
+    userSelector,
+} from '../../store/Reducers/userReducer/userReducer'
 import { Link } from 'react-router-dom'
 
 const LoginBtn = () => {
     const userProfile = useSelector(userSelector)
+    const authStatus = useSelector(authStatusSelector)
     return (
         <div>
             <Link
-                to={userProfile ? '/profile' : '/login'}
+                to={authStatus ? '/profile' : '/login'}
                 className="nav-btn-user"
             >
                 <svg

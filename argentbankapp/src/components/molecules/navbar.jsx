@@ -1,5 +1,4 @@
 import LoginBtn from '../atoms/loginBtn'
-import Logo from '../atoms/logo'
 import { useSelector } from 'react-redux'
 import { authStatusSelector } from '../../store/Reducers/userReducer/userReducer'
 import LogOutBtn from '../atoms/logoutBtn'
@@ -11,14 +10,12 @@ const NavBar = () => {
     if (!isAuthentified) {
         return (
             <nav className="main-nav">
-                <Logo />
                 <LoginBtn />
             </nav>
         )
     } else {
         return (
             <nav className="main-nav">
-                <Logo />
                 <div className="navbar">
                     <LoginBtn />
                     <ParamsBtn />

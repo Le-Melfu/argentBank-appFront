@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux'
 import UserHeader from '../components/molecules/userHeader'
 import Account from '../components/organisms/account'
-import Footer from '../components/organisms/footer'
-import NavBar from '../components/organisms/navbar'
 import { authStatusSelector } from '../store/Reducers/userReducer/userReducer'
 
 const UserPage = () => {
@@ -12,7 +10,6 @@ const UserPage = () => {
     } else {
         return (
             <div className="main-container">
-                <NavBar />
                 <main className="main bg-dark">
                     <UserHeader />
                     <h2 className="sr-only">Accounts</h2>
@@ -32,7 +29,6 @@ const UserPage = () => {
                         amoutdesc="Current Balance"
                     />
                 </main>
-                <Footer />
             </div>
         )
     }
