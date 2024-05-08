@@ -47,6 +47,7 @@ const SignInForm = () => {
                     type={Input_Type.INPUT_EMAIL}
                     styleclass="input-wrapper"
                     onChange={handleInputChange}
+                    value={userAccount.email}
                 />
                 <Input
                     name="password"
@@ -54,6 +55,7 @@ const SignInForm = () => {
                     type={Input_Type.INPUT_PASSWORD}
                     styleclass="input-wrapper"
                     onChange={handleInputChange}
+                    value={userAccount.password}
                 />
                 <Input
                     name="remember-me"
