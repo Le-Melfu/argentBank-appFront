@@ -30,7 +30,6 @@ export const onSubmit = (userAccount, remembered, navigate) => {
                 dispatch(userLogInSuccess(token))
             })
             .catch((error) => {
-                console.error('Erreur lors de la connexion:', error)
                 dispatch(userLoginFailure())
             })
     }
@@ -55,9 +54,7 @@ export const fetchUserProfile = (token) => {
                 const user = data.body
                 dispatch(updateUserProfile(user))
             })
-            .catch((error) => {
-                console.error('Erreur lors de la connexion:', error)
-            })
+            .catch((error) => {})
     }
 }
 
@@ -80,12 +77,7 @@ export const fetchNewUserName = (newUsername, token) => {
             .then((data) => {
                 dispatch(updateUserProfile(data.body))
             })
-            .catch((error) => {
-                console.error(
-                    'Erreur lors de la modification du nom utilisateur',
-                    error
-                )
-            })
+            .catch((error) => {})
     }
 }
 
